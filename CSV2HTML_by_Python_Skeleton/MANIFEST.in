@@ -1,0 +1,5 @@
+include MANIFEST.in
+include Makefile
+include CSV2HTML.py
+recursive-include CSV2HTML.app *
+recursive-include csv2html *
