@@ -1,31 +1,40 @@
 # CSVtoHTML
 
-## ローカルリポジトリの初期化
+### ローカルリポジトリの初期化
 git init
 
-## リモートリポジトリとの紐付け
-git remote add origin {gitのURL}
-
-## 指定ディレクトリ配下の変更や、新規作成した全てのファイルをステージエリアに追加する(ファイルを登録)
-git add .
-
-## コミット
-git commit -m "{コメント}"
-
-## リモートリポジトリに、ローカルのmainブランチを送信する。リモートリポジトリ上の、同名のブランチ（ここではmainブランチ）が更新される。
-git push origin main
+### リモートリポジトリとの紐付け
+git remote add origin {リモートリポジトリのURL}
 
 ## リモートリポジトリを取得する
-git clone {gitのURL}
+git clone {リモートリポジトリのURL}
 
-## 指定されたブランチに切り替える
-git switch {branch}
-
-## リモートからの変更を取得する
+### リモートから変更を取得
 git pull
 
-## addの取り消し
+### ブランチの作成
+git branch {ブランチ名}
+
+### ブランチの変更
+git switch {ブランチ名}
+
+### ブランチを作成して変更
+git switch -c {ブランチ名}
+
+### ファイルをステージエリアに追加
+git add .
+
+### addの取り消し
 git reset HEAD <ファイル名>
 
-## 直前のcommitを取り消し(コミット取り消した上でワークディレクトリの内容も書き換え)
+### コミット
+git commit -m "コメント"
+
+### 直前のcommitを取り消し(コミット取り消した上でワークディレクトリの内容も書き換え)
 git reset --hard HEAD^
+
+### リモートリポジトリに、ローカルの指定したブランチを送信
+git push origin {ブランチ名}
+
+### ログの表示
+git log --oneline --graph
