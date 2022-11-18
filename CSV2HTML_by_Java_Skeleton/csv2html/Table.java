@@ -103,6 +103,14 @@ public class Table extends Object
 	 */
 	private BufferedImage picture(String aString)
 	{
+		List<BufferedImage> image = images();
+		List<BufferedImage> thumbnail = thumbnails();
+		/*
+		 * タプルから値を参照する感じになる？ 
+		 * 
+		 * 
+		 */
+		
 		return null;
 	}
 
