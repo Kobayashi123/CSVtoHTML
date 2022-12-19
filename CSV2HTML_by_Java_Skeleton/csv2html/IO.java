@@ -18,7 +18,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * 入出力のコンストラクタ。
-	 * 
+	 *
 	 * @param aTable テーブル
 	 */
 	public IO(Table aTable) {
@@ -31,7 +31,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * 属性リストを応答する。
-	 * 
+	 *
 	 * @return 属性リスト
 	 */
 	public Attributes attributes() {
@@ -40,7 +40,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * ファイルやディレクトリを削除するクラスメソッド。
-	 * 
+	 *
 	 * @param aFile ファイルやディレクトリ
 	 */
 	public static void deleteFileOrDirectory(File aFile) {
@@ -63,7 +63,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * 指定された文字列をHTML内に記述できる正式な文字列に変換して応答する。
-	 * 
+	 *
 	 * @param aString 文字列
 	 * @return HTML内に記述できる正式な文字列
 	 */
@@ -73,7 +73,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * 指定されたファイルからテキストを読み込んで、それを行リストにして応答するクラスメソッド。
-	 * 
+	 *
 	 * @param aFile ファイル
 	 * @return 行リスト
 	 */
@@ -83,7 +83,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * 指定されたファイル文字列からテキストを読み込んで、それを行リストにして応答するクラスメソッド。
-	 * 
+	 *
 	 * @param fileString ファイル文字列
 	 * @return 行リスト
 	 */
@@ -93,7 +93,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * 指定されたURL文字列からテキストを読み込んで、それを行リストにして応答するクラスメソッド。
-	 * 
+	 *
 	 * @param urlString URL文字列
 	 * @return 行リスト
 	 */
@@ -103,7 +103,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * 指定されたURLからテキストを読み込んで、それを行リストにして応答するクラスメソッド。
-	 * 
+	 *
 	 * @param aURL URL
 	 * @return 行リスト
 	 */
@@ -113,7 +113,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * 文字列をセパレータで分割したトークン列を応答するクラスメソッド。
-	 * 
+	 *
 	 * @param string     文字列
 	 * @param separators セパレータ文字列
 	 * @return トークン列
@@ -124,7 +124,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * テーブルを応答する。
-	 * 
+	 *
 	 * @return テーブル
 	 */
 	public Table table() {
@@ -133,7 +133,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * タプル群を応答する。
-	 * 
+	 *
 	 * @return タプル群
 	 */
 	public List<Tuple> tuples() {
@@ -142,7 +142,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * 指定された行リストを、指定されたファイルに書き出すクラスメソッド。
-	 * 
+	 *
 	 * @param aCollection 行リスト
 	 * @param aFile       ファイル
 	 */
@@ -154,7 +154,7 @@ public abstract class IO extends Object {
 
 	/**
 	 * 指定された行リストを、指定されたファイル名のファイルに書き出すクラスメソッド。
-	 * 
+	 *
 	 * @param aCollection 行リスト
 	 * @param fileString  ファイル名
 	 */
