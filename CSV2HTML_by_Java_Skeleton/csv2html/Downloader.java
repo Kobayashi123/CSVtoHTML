@@ -106,6 +106,10 @@ public class Downloader extends IO {
 	 */
 	public void perform() {
 		this.downloadCSV();
+
+		Reader aReader = new Reader(this.table());
+		aReader.perform();
+
 		this.downloadImages();
 		this.downloadThumbnails();
 
