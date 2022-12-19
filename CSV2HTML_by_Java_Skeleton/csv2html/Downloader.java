@@ -28,13 +28,13 @@ public class Downloader extends IO {
 	 * 総理大臣の情報を記したCSVファイルをダウンロードする。
 	 */
 	public void downloadCSV() {
-		AttributesForPrimeMinisters primeMinister = new AttributesForPrimeMinisters("input");
-		String urlString = primeMinister.csvUrl();
+		String urlString = this.attributes().csvUrl();
+		String fileString = this.attributes().baseDirectory() + urlString.substring(urlString.lastIndexOf("/") + 1);
 
-		String fileString = urlString.substring(urlString.lastIndexOf("/") + 1);
-		fileString = primeMinister.baseDirectory() + fileString;
-
-		deleteFileOrDirectory(new File(fileString));
+		File aFile = new File(fileString);
+		if (aFile.exists()) {
+			deleteFileOrDirectory(aFile);
+		}
 
 		List<String> aList = readTextFromURL(urlString);
 		writeText(aList, fileString);
@@ -58,8 +58,7 @@ public class Downloader extends IO {
 	 * @param indexOfPicture 画像のインデックス
 	 */
 	private void downloadPictures(int indexOfPicture) {
-		AttributesForPrimeMinisters primeMinister = new AttributesForPrimeMinisters("input");
-		String urlString = primeMinister.baseUrl() + Integer.valueOf(indexOfPicture).toString();
+		String urlString = this.attributes().baseUrl() + "images/039.jpg";
 
 		URL aURL = null;
 		try {
@@ -75,15 +74,14 @@ public class Downloader extends IO {
 			anException.printStackTrace();
 		}
 
-		String currentDirectory = System.getProperty("user.dir");
-		String dirName = "PrimeMinisters";
-		String fileString = urlString.substring(urlString.lastIndexOf("/") + 1);
-		fileString = currentDirectory + File.separator + dirName + File.separator + fileString;
+		String fileString = this.attributes().baseDirectory() + urlString.substring(urlString.lastIndexOf("/") + 1);
 
 		File aFile = new File(fileString);
-		deleteFileOrDirectory(aFile);
+		if (aFile.exists()) {
+			deleteFileOrDirectory(aFile);
+		}
 
-		String kindString = urlString.substring(urlString.lastIndexOf(".") + 1); // 画像ファイルの拡張子を求めます。
+		String kindString = urlString.substring(urlString.lastIndexOf(".") + 1);
 		try {
 			ImageIO.write(anImage, kindString, aFile);
 		} catch (IOException anException) {
@@ -110,6 +108,7 @@ public class Downloader extends IO {
 		this.downloadCSV();
 		this.downloadImages();
 		this.downloadThumbnails();
+
 		return;
 	}
 }
