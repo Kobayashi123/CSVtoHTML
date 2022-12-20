@@ -5,8 +5,11 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.net.URL;
+import java.nio.file.Files;
 import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Objects;
+
 import utility.ImageUtility;
 
 /**
@@ -58,34 +61,51 @@ public class Downloader extends IO {
 	 * @param indexOfPicture 画像のインデックス
 	 */
 	private void downloadPictures(int indexOfPicture) {
-		String urlString = this.attributes().baseUrl() + "images/039.jpg";
-
-		URL aURL = null;
-		try {
-			aURL = new URL(urlString);
-		} catch (MalformedURLException anException) {
-			anException.printStackTrace();
+		File aDirectory = new File(this.attributes().baseDirectory().concat("images"));
+		if (aDirectory.exists()) {
+			IO.deleteFileOrDirectory(aDirectory);
 		}
+		aDirectory.mkdir();
 
-		BufferedImage anImage = null;
-		try {
-			anImage = ImageIO.read(aURL);
-		} catch (IOException anException) {
-			anException.printStackTrace();
+		aDirectory = new File(this.attributes().baseDirectory().concat("thumbnails"));
+		if (aDirectory.exists()) {
+			IO.deleteFileOrDirectory(aDirectory);
 		}
+		aDirectory.mkdir();
 
-		String fileString = this.attributes().baseDirectory() + urlString.substring(urlString.lastIndexOf("/") + 1);
+		this.tuples().remove(0); // 1行目の"画像"と"縮小画像"を省きます
+		for (Tuple aTuple : this.tuples()) {
+			String imageString = aTuple.values().get(indexOfPicture);
 
-		File aFile = new File(fileString);
-		if (aFile.exists()) {
-			deleteFileOrDirectory(aFile);
-		}
+			String urlString = this.attributes().baseUrl().concat(imageString);
 
-		String kindString = urlString.substring(urlString.lastIndexOf(".") + 1);
-		try {
-			ImageIO.write(anImage, kindString, aFile);
-		} catch (IOException anException) {
-			anException.printStackTrace();
+			URL aURL = null;
+			try {
+				aURL = new URL(urlString);
+			} catch (MalformedURLException anException) {
+				anException.printStackTrace();
+			}
+
+			BufferedImage anImage = null;
+			try {
+				anImage = ImageIO.read(aURL);
+			} catch (IOException anException) {
+				anException.printStackTrace();
+			}
+
+			String fileString = this.attributes().baseDirectory().concat(imageString);
+
+			File aFile = new File(fileString);
+			if (aFile.exists()) {
+				deleteFileOrDirectory(aFile);
+			}
+
+			String kindString = urlString.substring(urlString.lastIndexOf(".") + 1);
+			try {
+				ImageIO.write(anImage, kindString, aFile);
+			} catch (IOException anException) {
+				anException.printStackTrace();
+			}
 		}
 
 		return;
