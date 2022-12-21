@@ -50,6 +50,13 @@ public class Downloader extends IO {
 	 */
 	public void downloadImages() {
 		int indexOfImage = this.attributes().indexOfImage();
+
+		File aDirectory = new File(this.attributes().baseDirectory().concat("images"));
+		if (aDirectory.exists()) {
+			IO.deleteFileOrDirectory(aDirectory);
+		}
+		aDirectory.mkdir();
+
 		this.downloadPictures(indexOfImage);
 
 		return;
@@ -61,18 +68,6 @@ public class Downloader extends IO {
 	 * @param indexOfPicture 画像のインデックス
 	 */
 	private void downloadPictures(int indexOfPicture) {
-		File aDirectory = new File(this.attributes().baseDirectory().concat("images"));
-		if (aDirectory.exists()) {
-			IO.deleteFileOrDirectory(aDirectory);
-		}
-		aDirectory.mkdir();
-
-		aDirectory = new File(this.attributes().baseDirectory().concat("thumbnails"));
-		if (aDirectory.exists()) {
-			IO.deleteFileOrDirectory(aDirectory);
-		}
-		aDirectory.mkdir();
-
 		this.tuples().remove(0); // 1行目の"画像"と"縮小画像"を省きます
 		for (Tuple aTuple : this.tuples()) {
 			String imageString = aTuple.values().get(indexOfPicture);
@@ -97,7 +92,7 @@ public class Downloader extends IO {
 
 			File aFile = new File(fileString);
 			if (aFile.exists()) {
-				deleteFileOrDirectory(aFile);
+				IO.deleteFileOrDirectory(aFile);
 			}
 
 			String kindString = urlString.substring(urlString.lastIndexOf(".") + 1);
@@ -116,6 +111,13 @@ public class Downloader extends IO {
 	 */
 	public void downloadThumbnails() {
 		int indexOfThumbnail = this.attributes().indexOfThumbnail();
+
+		File aDirectory = new File(this.attributes().baseDirectory().concat("thumbnails"));
+		if (aDirectory.exists()) {
+			IO.deleteFileOrDirectory(aDirectory);
+		}
+		aDirectory.mkdir();
+
 		this.downloadPictures(indexOfThumbnail);
 
 		return;
