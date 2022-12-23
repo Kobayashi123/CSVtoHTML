@@ -6,10 +6,11 @@ __author__ = 'AOKI Atsushi'
 __version__ = '1.0.7'
 __date__ = '2021/01/10 (Created: 2016/01/01)'
 
-# import os
+import os
+import traceback
 
 from csv2html.io import IO
-# from csv2html.tuple import Tuple
+from csv2html.tuple import Tuple
 
 class Reader(IO):
 	"""リーダ：情報を記したCSVファイルを読み込んでテーブルに仕立て上げる。"""
@@ -18,9 +19,19 @@ class Reader(IO):
 		"""リーダのコンストラクタ。"""
 
 		super().__init__(input_table)
-		(lambda x: x)(input_table) # NOP
 
 	def perform(self):
 		"""ダウンロードしたCSVファイルを読み込む。"""
 
-		(lambda x: x)(self) # NOP
+		try:
+			url_string = self.attributes().csv_url()
+			csv_file = os.path.join(self.attributes().base_directory(), url_string.split('/')[-1])
+
+			with open(csv_file, 'r', encoding='utf-8') as a_file:
+				for a_line in a_file:
+					a_list = a_line.split(',')
+
+					self.table().add(Tuple(self.attributes(), a_list))
+
+		except FileNotFoundError:
+			traceback.print_exc()
