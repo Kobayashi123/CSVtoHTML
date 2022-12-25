@@ -14,6 +14,7 @@ import utility.StringUtility;
  * ライタ：情報のテーブルをHTMLページとして書き出す。
  */
 public class Writer extends IO {
+
 	/**
 	 * ライタのコンストラクタ。
 	 *
@@ -57,6 +58,40 @@ public class Writer extends IO {
 	 * @param aWriter ライタ
 	 */
 	public void writeAttributesOn(BufferedWriter aWriter) {
+		// "人目"、"代"といった名前が欲しい
+		
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("<body><div class=\"belt\"><h2>");
+		sb.append(this.attributes().captionString());
+		sb.append("</h2></div><table class=\"belt\" summary=\"table\"><tbody><tr><td><table class=\"content\" summary=\"table\"><tbody>");
+		
+		
+		sb.append("<tr>");
+		for(Integer i = 0; i<1; i++){
+			Tuple aTuple = this.tuples().get(i);
+			Integer index[] = {aTuple.attributes().indexOfNo(), aTuple.attributes().indexOfOrder(), 
+				aTuple.attributes().indexOfName(), aTuple.attributes().indexOfKana(),
+				aTuple.attributes().indexOfDays(), aTuple.attributes().indexOfSchool(),
+				aTuple.attributes().indexOfParty(), aTuple.attributes().indexOfPlace(),
+				aTuple.attributes().indexOfImage()};
+			for(Integer aIndex: index){
+				//System.out.println(aIndex);
+				sb.append("<td class=\"center-pink\"><strong>");
+				sb.append(aTuple.attributes().at(aIndex)); 
+				sb.append("</strong></td>");
+			}
+		}
+		
+		sb.append("</tr>");
+		
+
+		String attributes = sb.toString();
+		try {
+			aWriter.write(attributes);
+		} catch (IOException anException) {
+			anException.printStackTrace();
+		}
 		return;
 	}
 
@@ -188,7 +223,6 @@ public class Writer extends IO {
 	public void writeTableBodyOn(BufferedWriter aWriter) {
 		this.writeAttributesOn(aWriter);
 		this.writeTuplesOn(aWriter);
-
 		return;
 	}
 
@@ -198,6 +232,37 @@ public class Writer extends IO {
 	 * @param aWriter ライタ
 	 */
 	public void writeTuplesOn(BufferedWriter aWriter) {
+		// Tupleからそれぞれの値を持ってくる
+		StringBuffer sb = new StringBuffer();
+		
+		for(Tuple aTuple: this.tuples()){
+			sb.append("<tr>");
+			Integer index[] = {aTuple.attributes().indexOfNo(), aTuple.attributes().indexOfOrder(), 
+				aTuple.attributes().indexOfName(), aTuple.attributes().indexOfKana(),
+				aTuple.attributes().indexOfDays(), aTuple.attributes().indexOfSchool(),
+				aTuple.attributes().indexOfParty(), aTuple.attributes().indexOfPlace(),
+				aTuple.attributes().indexOfImage()};
+			for(Integer aIndex: index){
+				sb.append("<td class=\"center-blue\">");
+				if(aIndex != aTuple.attributes().indexOfImage()){
+					sb.append(aTuple.attributes().at(aIndex));
+				}else{
+					sb.append(aTuple.attributes().at(aIndex));
+				}
+				sb.append("</td>");
+			}
+			sb.append("</tr>");
+	
+		}
+
+		sb.append("</tr></tbody></table></td></tr></tbody></table>");
+		
+		String tuple = sb.toString();
+		try {
+			aWriter.write(tuple);
+		} catch (IOException anException) {
+			anException.printStackTrace();
+		}
 		return;
 	}
 }
