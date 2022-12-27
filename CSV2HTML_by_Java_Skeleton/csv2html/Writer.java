@@ -22,7 +22,6 @@ public class Writer extends IO {
 	 */
 	public Writer(Table aTable) {
 		super(aTable);
-
 		return;
 	}
 
@@ -68,20 +67,18 @@ public class Writer extends IO {
 		
 		
 		sb.append("<tr>");
-		for(Integer i = 0; i<1; i++){
-			Tuple aTuple = this.tuples().get(i);
-			Integer index[] = {aTuple.attributes().indexOfNo(), aTuple.attributes().indexOfOrder(), 
-				aTuple.attributes().indexOfName(), aTuple.attributes().indexOfKana(),
-				aTuple.attributes().indexOfDays(), aTuple.attributes().indexOfSchool(),
-				aTuple.attributes().indexOfParty(), aTuple.attributes().indexOfPlace(),
-				aTuple.attributes().indexOfImage()};
-			for(Integer aIndex: index){
-				//System.out.println(aIndex);
-				sb.append("<td class=\"center-pink\"><strong>");
-				sb.append(aTuple.attributes().at(aIndex)); 
-				sb.append("</strong></td>");
-			}
+		Integer index[] = {this.table().attributes().indexOfNo(), this.table().attributes().indexOfOrder(), 
+			this.table().attributes().indexOfName(), this.table().attributes().indexOfKana(),
+			this.table().attributes().indexOfDays(), this.table().attributes().indexOfSchool(),
+			this.table().attributes().indexOfParty(), this.table().attributes().indexOfPlace(),
+			this.table().attributes().indexOfImage()};
+		for(Integer aIndex: index){
+			//System.out.println(aIndex);
+			sb.append("<td class=\"center-pink\"><strong>");
+			sb.append(this.table().attributes().at(aIndex)); 
+			sb.append("</strong></td>");
 		}
+		
 		
 		sb.append("</tr>");
 		
@@ -235,7 +232,7 @@ public class Writer extends IO {
 		// Tupleからそれぞれの値を持ってくる
 		StringBuffer sb = new StringBuffer();
 		
-		for(Tuple aTuple: this.tuples()){
+		for(Tuple aTuple: aTable.tuples()){
 			sb.append("<tr>");
 			Integer index[] = {aTuple.attributes().indexOfNo(), aTuple.attributes().indexOfOrder(), 
 				aTuple.attributes().indexOfName(), aTuple.attributes().indexOfKana(),
@@ -243,17 +240,19 @@ public class Writer extends IO {
 				aTuple.attributes().indexOfParty(), aTuple.attributes().indexOfPlace(),
 				aTuple.attributes().indexOfImage()};
 			for(Integer aIndex: index){
+				//System.out.println(aIndex);
 				sb.append("<td class=\"center-blue\">");
 				if(aIndex != aTuple.attributes().indexOfImage()){
-					sb.append(aTuple.attributes().at(aIndex));
+					sb.append(this.computeStringOfImage());
 				}else{
-					sb.append(aTuple.attributes().at(aIndex));
+					sb.append(aTuple.values().get(aIndex));
 				}
 				sb.append("</td>");
 			}
 			sb.append("</tr>");
 	
 		}
+	
 
 		sb.append("</tr></tbody></table></td></tr></tbody></table>");
 		
