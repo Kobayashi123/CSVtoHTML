@@ -155,7 +155,6 @@ public class Table extends Object {
 			return this.tuples;
 		}
 		this.tuples = new ArrayList<Tuple>();
-
 		return this.tuples;
 	}
 }

@@ -11,6 +11,7 @@ import java.util.List;
  */
 abstract class Attributes extends Object
 {
+
 	/**
 	 * ベースとなるディレクトリを記憶する（クラス変数）フィールド。
 	 */
@@ -51,6 +52,31 @@ abstract class Attributes extends Object
 
 		return aString;
 	}
+
+	/**
+	 * 政党のインデックスを応答する。
+	 * @return インデックス
+	 */
+	abstract int indexOfParty();
+
+	/**
+	 * 出身地のインデックスを応答する。
+	 * @return インデックス
+	 */
+	abstract int indexOfPlace();
+
+	/**
+	 * 代のインデックスを応答する。
+	 * @return インデックス
+	 */
+	abstract int indexOfOrder();
+	
+
+	/**
+	 * 出身校のインデックスを応答する。
+	 * @return インデックス
+	 */
+	abstract int indexOfSchool();
 
 	/**
 	 * 標題文字列を応答する。
