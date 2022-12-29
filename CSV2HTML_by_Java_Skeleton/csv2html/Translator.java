@@ -53,7 +53,7 @@ public class Translator extends Object {
 	 * @return 在位日数の文字列
 	 */
 	public String computeNumberOfDays(String periodString) {
-		return null;
+		return periodString;
 	}
 
 	/**
@@ -116,6 +116,21 @@ public class Translator extends Object {
 	 * CSVファイルを基にしたテーブルから、HTMLページを基にするテーブルに変換する。
 	 */
 	public void translate() {
+		for (Tuple aTuple : this.inputTable.tuples()) {
+			List<String> aList = new ArrayList<String>();
+			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfNo()));
+			aList.add(aTuple.values().get(1));
+			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfName()));
+			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfKana()));
+			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfPeriod()));
+			aList.add(this.computeNumberOfDays(aTuple.values().get(this.outputTable.attributes().indexOfPeriod())));
+			aList.add(aTuple.values().get(5));
+			aList.add(aTuple.values().get(6));
+			aList.add(aTuple.values().get(7));
+			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfImage()));
+
+			this.outputTable.add(new Tuple(this.outputTable.attributes(), aList));
+		}
 		return;
 	}
 }
