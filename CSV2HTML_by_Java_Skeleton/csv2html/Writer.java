@@ -52,43 +52,116 @@ public class Writer extends IO {
 	}
 
 	/**
+	 * ボディを書き出す。
+	 *
+	 * @param aWriter ライタ
+	 */
+	public void writeTableBodyOn(BufferedWriter aWriter) {
+
+		try {
+			aWriter.write("<body>\n");
+			aWriter.write("<div class=\"belt\">\n");
+			aWriter.write("<h2>" + this.attributes().captionString() + "</h2>\n");
+			aWriter.write("</div>\n");
+			aWriter.write("<table class=\"belt\" summary=\"table\">\n");
+			aWriter.write("	<tbody>\n");
+			aWriter.write("		<tr>\n");
+			aWriter.write("			<td>\n");
+			aWriter.write("				<table class=\"content\" summary=\"table\">\n");
+			aWriter.write("					<tbody>\n");
+
+			this.writeAttributesOn(aWriter);
+			this.writeTuplesOn(aWriter);
+
+			aWriter.write("					</tbody>\n");
+			aWriter.write("				</table>\n");
+			aWriter.write("			</td>\n");
+			aWriter.write("		</tr>\n");
+			aWriter.write("	</tbody>\n");
+			aWriter.write("</table>\n");
+
+			aWriter.write("</body>\n");
+		} catch (IOException anException) {
+			anException.printStackTrace();
+		}
+		return;
+	}
+
+	/**
 	 * 属性リストを書き出す。
 	 *
 	 * @param aWriter ライタ
 	 */
 	public void writeAttributesOn(BufferedWriter aWriter) {
-		// "人目"、"代"といった名前が欲しい
-		
-		
-		StringBuffer sb = new StringBuffer();
-		sb.append("<body><div class=\"belt\"><h2>");
-		sb.append(this.attributes().captionString());
-		sb.append("</h2></div><table class=\"belt\" summary=\"table\"><tbody><tr><td><table class=\"content\" summary=\"table\"><tbody>");
-		
-		
-		sb.append("<tr>");
-		Integer index[] = {this.table().attributes().indexOfNo(), this.table().attributes().indexOfOrder(), 
-			this.table().attributes().indexOfName(), this.table().attributes().indexOfKana(),
-			this.table().attributes().indexOfDays(), this.table().attributes().indexOfSchool(),
-			this.table().attributes().indexOfParty(), this.table().attributes().indexOfPlace(),
-			this.table().attributes().indexOfImage()};
-		for(Integer aIndex: index){
-			//System.out.println(aIndex);
-			sb.append("<td class=\"center-pink\"><strong>");
-			sb.append(this.table().attributes().at(aIndex)); 
-			sb.append("</strong></td>");
-		}
-		
-		
-		sb.append("</tr>");
-		
-
-		String attributes = sb.toString();
 		try {
-			aWriter.write(attributes);
+
+			aWriter.write("						<tr>");
+			String aTab = "							";
+			String aString2 = "<td class=\"center-pink\"><strong>";
+
+			for (String aString : this.table().attributes().names()) {
+				aWriter.write(aTab);
+				aWriter.write(aString2);
+				aWriter.write(aString);
+				aWriter.write("</strong></td>");
+				aWriter.newLine();
+			}
+			/*
+			 * for (Integer aIndex : index) {
+			 * // System.out.println(aIndex);
+			 * aWriter.write("<td class=\"center-pink\"><strong>");
+			 * aWriter.write(this.table().attributes().at(aIndex));
+			 * aWriter.write("</strong></td>");
+			 * }
+			 */
+
+			aWriter.write("</tr>");
 		} catch (IOException anException) {
 			anException.printStackTrace();
 		}
+
+		return;
+	}
+
+	/**
+	 * タプル群を書き出す。
+	 *
+	 * @param aWriter ライタ
+	 */
+	public void writeTuplesOn(BufferedWriter aWriter) {
+		// Tupleからそれぞれの値を持ってくる
+
+		try {
+			aWriter.write("<tr>");
+			/*
+			 * for (Tuple aTuple : aTable.tuples()) {
+			 * aWriter.write("<tr>");
+			 * Integer index[] = { aTuple.attributes().indexOfNo(),
+			 * aTuple.attributes().indexOfOrder(),
+			 * aTuple.attributes().indexOfName(), aTuple.attributes().indexOfKana(),
+			 * aTuple.attributes().indexOfDays(), aTuple.attributes().indexOfSchool(),
+			 * aTuple.attributes().indexOfParty(), aTuple.attributes().indexOfPlace(),
+			 * aTuple.attributes().indexOfImage() };
+			 * for (Integer aIndex : index) {
+			 * // System.out.println(aIndex);
+			 * aWriter.write("<td class=\"center-blue\">");
+			 * if (aIndex != aTuple.attributes().indexOfImage()) {
+			 * aWriter.write(this.computeStringOfImage());
+			 * } else {
+			 * aWriter.write(aTuple.values().get(aIndex));
+			 * }
+			 * aWriter.write("</td>");
+			 * }
+			 *
+			 * aWriter.write("</tr>");
+			 *
+			 * }
+			 */
+			aWriter.write("</tr>");
+		} catch (Exception anException) {
+			anException.printStackTrace();
+		}
+
 		return;
 	}
 
@@ -120,7 +193,7 @@ public class Writer extends IO {
 	 * @param aWriter ライタ
 	 */
 	public void writeHeaderOn(BufferedWriter aWriter) {
-		String header = """
+		String head = """
 				<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 				<html lang="ja">
 				<head>
@@ -205,60 +278,7 @@ public class Writer extends IO {
 				""";
 
 		try {
-			aWriter.write(header);
-		} catch (IOException anException) {
-			anException.printStackTrace();
-		}
-		return;
-	}
-
-	/**
-	 * ボディを書き出す。
-	 *
-	 * @param aWriter ライタ
-	 */
-	public void writeTableBodyOn(BufferedWriter aWriter) {
-		this.writeAttributesOn(aWriter);
-		this.writeTuplesOn(aWriter);
-		return;
-	}
-
-	/**
-	 * タプル群を書き出す。
-	 *
-	 * @param aWriter ライタ
-	 */
-	public void writeTuplesOn(BufferedWriter aWriter) {
-		// Tupleからそれぞれの値を持ってくる
-		StringBuffer sb = new StringBuffer();
-		
-		for(Tuple aTuple: aTable.tuples()){
-			sb.append("<tr>");
-			Integer index[] = {aTuple.attributes().indexOfNo(), aTuple.attributes().indexOfOrder(), 
-				aTuple.attributes().indexOfName(), aTuple.attributes().indexOfKana(),
-				aTuple.attributes().indexOfDays(), aTuple.attributes().indexOfSchool(),
-				aTuple.attributes().indexOfParty(), aTuple.attributes().indexOfPlace(),
-				aTuple.attributes().indexOfImage()};
-			for(Integer aIndex: index){
-				//System.out.println(aIndex);
-				sb.append("<td class=\"center-blue\">");
-				if(aIndex != aTuple.attributes().indexOfImage()){
-					sb.append(this.computeStringOfImage());
-				}else{
-					sb.append(aTuple.values().get(aIndex));
-				}
-				sb.append("</td>");
-			}
-			sb.append("</tr>");
-	
-		}
-	
-
-		sb.append("</tr></tbody></table></td></tr></tbody></table>");
-		
-		String tuple = sb.toString();
-		try {
-			aWriter.write(tuple);
+			aWriter.write(head);
 		} catch (IOException anException) {
 			anException.printStackTrace();
 		}
