@@ -53,7 +53,8 @@ public class Translator extends Object {
 	 * @return 在位日数の文字列
 	 */
 	public String computeNumberOfDays(String periodString) {
-		return periodString;
+		String temp = "1000(temp)";
+		return temp;
 	}
 
 	/**
@@ -116,8 +117,21 @@ public class Translator extends Object {
 	 * CSVファイルを基にしたテーブルから、HTMLページを基にするテーブルに変換する。
 	 */
 	public void translate() {
+		List<String> aList = new ArrayList<String>();
+		aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfNo()));
+		aList.add(this.inputTable.attributes().nameAt(1));
+		aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfName()));
+		aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfKana()));
+		aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfPeriod()));
+		aList.add("在位日数");
+		aList.add(this.inputTable.attributes().nameAt(5));
+		aList.add(this.inputTable.attributes().nameAt(6));
+		aList.add(this.inputTable.attributes().nameAt(7));
+		aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfImage()));
+		this.outputTable.attributes().names(aList);
+
 		for (Tuple aTuple : this.inputTable.tuples()) {
-			List<String> aList = new ArrayList<String>();
+			aList = new ArrayList<String>();
 			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfNo()));
 			aList.add(aTuple.values().get(1));
 			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfName()));
@@ -127,7 +141,7 @@ public class Translator extends Object {
 			aList.add(aTuple.values().get(5));
 			aList.add(aTuple.values().get(6));
 			aList.add(aTuple.values().get(7));
-			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfImage()));
+			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfThumbnail()));
 
 			this.outputTable.add(new Tuple(this.outputTable.attributes(), aList));
 		}
