@@ -68,7 +68,6 @@ public class Downloader extends IO {
 	 * @param indexOfPicture 画像のインデックス
 	 */
 	private void downloadPictures(int indexOfPicture) {
-		this.tuples().remove(0); // 1行目の"画像"と"縮小画像"を省きます
 		for (Tuple aTuple : this.tuples()) {
 			String imageString = aTuple.values().get(indexOfPicture);
 
@@ -124,7 +123,7 @@ public class Downloader extends IO {
 	}
 
 	/**
-	 * 総理大臣の情報を記したCSVファイルをダウンロードして、画像群やサムネイル画像群もダウロードする。
+	 * 総理大臣の情報を記したCSVファイルをダウンロードして、画像群やサムネイル画像群もダウンロードする。
 	 */
 	public void perform() {
 		this.downloadCSV();

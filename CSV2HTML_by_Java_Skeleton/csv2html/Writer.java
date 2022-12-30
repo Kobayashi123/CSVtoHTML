@@ -95,11 +95,12 @@ public class Writer extends IO {
 	public void writeAttributesOn(BufferedWriter aWriter) {
 		try {
 
-			aWriter.write("						<tr>");
+			aWriter.write("						<tr>\n");
 			String aTab = "							";
 			String aString2 = "<td class=\"center-pink\"><strong>";
 
 			for (String aString : this.table().attributes().names()) {
+				// System.out.println(aString);
 				aWriter.write(aTab);
 				aWriter.write(aString2);
 				aWriter.write(aString);
