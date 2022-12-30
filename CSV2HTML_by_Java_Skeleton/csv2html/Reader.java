@@ -38,9 +38,13 @@ public class Reader extends IO {
 			InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
 			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-			String aString = null;
+			String aString = bufferedReader.readLine();
+			List<String> aList = splitString(aString, ",");
+
+			this.table().attributes().names(aList);
+
 			while ((aString = bufferedReader.readLine()) != null) {
-				List<String> aList = splitString(aString, ",");
+				aList = splitString(aString, ",");
 
 				this.table().add(new Tuple(this.attributes(), aList));
 			}

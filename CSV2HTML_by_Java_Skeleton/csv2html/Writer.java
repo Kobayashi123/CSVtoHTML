@@ -93,29 +93,19 @@ public class Writer extends IO {
 	 * @param aWriter ライタ
 	 */
 	public void writeAttributesOn(BufferedWriter aWriter) {
+		String aTab = "							";
+		String aStereotypedPhrase = "<td class=\"center-pink\"><strong>";
 		try {
-
-			aWriter.write("						<tr>");
-			String aTab = "							";
-			String aString2 = "<td class=\"center-pink\"><strong>";
+			aWriter.write(aTab + "<tr>");
+			aWriter.newLine();
 
 			for (String aString : this.table().attributes().names()) {
-				aWriter.write(aTab);
-				aWriter.write(aString2);
-				aWriter.write(aString);
+				aWriter.write(aTab + aStereotypedPhrase + aString);
 				aWriter.write("</strong></td>");
 				aWriter.newLine();
 			}
-			/*
-			 * for (Integer aIndex : index) {
-			 * // System.out.println(aIndex);
-			 * aWriter.write("<td class=\"center-pink\"><strong>");
-			 * aWriter.write(this.table().attributes().at(aIndex));
-			 * aWriter.write("</strong></td>");
-			 * }
-			 */
-
-			aWriter.write("</tr>");
+			aWriter.write(aTab + "</tr>");
+			aWriter.newLine();
 		} catch (IOException anException) {
 			anException.printStackTrace();
 		}
@@ -129,35 +119,39 @@ public class Writer extends IO {
 	 * @param aWriter ライタ
 	 */
 	public void writeTuplesOn(BufferedWriter aWriter) {
-		// Tupleからそれぞれの値を持ってくる
+
+		String aTab = "					";
+		String aStereotypedPhrase;
 
 		try {
-			aWriter.write("<tr>");
-			/*
-			 * for (Tuple aTuple : aTable.tuples()) {
-			 * aWriter.write("<tr>");
-			 * Integer index[] = { aTuple.attributes().indexOfNo(),
-			 * aTuple.attributes().indexOfOrder(),
-			 * aTuple.attributes().indexOfName(), aTuple.attributes().indexOfKana(),
-			 * aTuple.attributes().indexOfDays(), aTuple.attributes().indexOfSchool(),
-			 * aTuple.attributes().indexOfParty(), aTuple.attributes().indexOfPlace(),
-			 * aTuple.attributes().indexOfImage() };
-			 * for (Integer aIndex : index) {
-			 * // System.out.println(aIndex);
-			 * aWriter.write("<td class=\"center-blue\">");
-			 * if (aIndex != aTuple.attributes().indexOfImage()) {
-			 * aWriter.write(this.computeStringOfImage());
-			 * } else {
-			 * aWriter.write(aTuple.values().get(aIndex));
-			 * }
-			 * aWriter.write("</td>");
-			 * }
-			 *
-			 * aWriter.write("</tr>");
-			 *
-			 * }
-			 */
-			aWriter.write("</tr>");
+			aWriter.write(aTab + "<tr>");
+			aWriter.newLine();
+
+			boolean color = true;
+			for (Tuple aTuple : this.table().tuples()) {
+				if (color) {
+					aStereotypedPhrase = "<td class=\"center-blue\">";
+					color = false;
+				} else {
+					aStereotypedPhrase = "<td class=\"center-yellow\">";
+					color = true;
+				}
+
+				for (String aString : aTuple.values()) {
+					if (aString.contains("thumbnail")) {
+						// this.table().attributes().names().get(this.table().attributes().indexOfThumbnail())))
+						aString = "<img class=\"borderless\" src=\"" + aString
+								+ "\" width=\"25\" height=\"32\" alt=\""
+								+ aString.substring(aString.lastIndexOf("/") + 1)
+								+ "\">";
+					}
+					aWriter.write(aTab + aStereotypedPhrase + aString);
+					aWriter.write("</td>");
+					aWriter.newLine();
+				}
+				aWriter.write(aTab + "</tr>");
+				aWriter.newLine();
+			}
 		} catch (Exception anException) {
 			anException.printStackTrace();
 		}
