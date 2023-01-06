@@ -6,9 +6,11 @@ __author__ = 'AOKI Atsushi'
 __version__ = '1.0.7'
 __date__ = '2021/01/10 (Created: 2016/01/01)'
 
-# import os
+import os
 # import shutil
-# import urllib.request
+import urllib.request
+from urllib.error import HTTPError
+import traceback
 
 from csv2html.io import IO
 # from csv2html.reader import Reader
@@ -24,8 +26,13 @@ class Downloader(IO):
 
 	def download_csv(self):
 		"""情報を記したCSVファイルをダウンロードする。"""
+		url_string = self.attributes().csv_url()
+		a_file = self.attributes().base_directory() + os.sep + url_string.rsplit("/")[-1]
 
-		(lambda x: x)(self) # NOP
+		try:
+			urllib.request.urlretrieve(url_string, a_file)
+		except HTTPError:
+			traceback.print_exc()
 
 	def download_images(self, image_filenames):
 		"""画像ファイル群または縮小画像ファイル群をダウンロードする。"""
@@ -36,4 +43,5 @@ class Downloader(IO):
 	def perform(self):
 		"""すべて（情報を記したCSVファイル・画像ファイル群・縮小画像ファイル群）をダウンロードする。"""
 
+		self.download_csv()
 		(lambda x: x)(self) # NOP
