@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import utility.StringUtility;
 
@@ -139,11 +140,8 @@ public class Writer extends IO {
 
 				for (String aString : aTuple.values()) {
 					if (aString.contains("thumbnail")) {
-						// this.table().attributes().names().get(this.table().attributes().indexOfThumbnail())))
-						aString = "<img class=\"borderless\" src=\"" + aString
-								+ "\" width=\"25\" height=\"32\" alt=\""
-								+ aString.substring(aString.lastIndexOf("/") + 1)
-								+ "\">";
+						aString = "<img class=\"borderless\" src=\" %s \" width=\"25\" height=\"32\" alt=\" %s \">"
+								.formatted(aString, aString.substring(aString.lastIndexOf("/") + 1));
 					}
 					aWriter.write(aTab + aStereotypedPhrase + aString);
 					aWriter.write("</td>");
@@ -165,13 +163,15 @@ public class Writer extends IO {
 	 * @param aWriter ライタ
 	 */
 	public void writeFooterOn(BufferedWriter aWriter) {
+		SimpleDateFormat aSimpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Calendar aCalendar = Calendar.getInstance();
 		String footer = """
 				<hr>
-				<div class="right-small">Created by csv2html.Translator on 2021/10/21 at 13:04:23</div>
+				<div class="right-small">Created by csv2html.Translator on %s</div>
 				</body>
 				</html>
 
-				""";
+				""".formatted(aSimpleDateFormat.format(aCalendar.getTime()));
 
 		try {
 			aWriter.write(footer);
@@ -187,18 +187,24 @@ public class Writer extends IO {
 	 * @param aWriter ライタ
 	 */
 	public void writeHeaderOn(BufferedWriter aWriter) {
-		String head = """
+		String doctype = """
 				<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 				<html lang="ja">
 				<head>
+				""";
+		String meta = """
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 				<meta http-equiv="Content-Style-Type" content="text/css">
 				<meta http-equiv="Content-Script-Type" content="text/javascript">
 				<meta name="keywords" content="Smalltalk,Oriented,Programming">
 				<meta name="description" content="Prime Ministers">
 				<meta name="author" content="AOKI Atsushi">
+				""";
+		String link = """
 				<link rev="made" href="http://www.cc.kyoto-su.ac.jp/~atsushi/">
 				<link rel="index" href="index.html">
+				""";
+		String css = """
 				<style type="text/css">
 				<!--
 				body {
@@ -267,12 +273,14 @@ public class Writer extends IO {
 				}
 				-->
 				</style>
-				<title>Prime Ministers</title>
-				</head>
 				""";
+		String title = """
+				<title>%s</title>
+				</head>
+				""".formatted(this.attributes().titleString());
 
 		try {
-			aWriter.write(head);
+			aWriter.write(doctype + meta + link + css + title);
 		} catch (IOException anException) {
 			anException.printStackTrace();
 		}
