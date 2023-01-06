@@ -32,7 +32,8 @@ public class Downloader extends IO {
 	 */
 	public void downloadCSV() {
 		String urlString = this.attributes().csvUrl();
-		String fileString = this.attributes().baseDirectory() + urlString.substring(urlString.lastIndexOf("/") + 1);
+		String fileString = this.attributes().baseDirectory()
+				.concat(urlString.substring(urlString.lastIndexOf("/") + 1));
 
 		File aFile = new File(fileString);
 		if (aFile.exists()) {
