@@ -13,7 +13,7 @@ from urllib.error import HTTPError
 import traceback
 
 from csv2html.io import IO
-# from csv2html.reader import Reader
+from csv2html.reader import Reader
 
 class Downloader(IO):
 	"""ダウンローダ：CSVファイル・画像ファイル・サムネイル画像ファイルをダウンロードする。"""
@@ -27,10 +27,10 @@ class Downloader(IO):
 	def download_csv(self):
 		"""情報を記したCSVファイルをダウンロードする。"""
 		url_string = self.attributes().csv_url()
-		a_file = self.attributes().base_directory() + os.sep + url_string.rsplit("/")[-1]
+		csv_file = os.path.join(self.attributes().base_directory(), url_string.split('/')[-1])
 
 		try:
-			urllib.request.urlretrieve(url_string, a_file)
+			urllib.request.urlretrieve(url_string, csv_file)
 		except HTTPError:
 			traceback.print_exc()
 
@@ -44,4 +44,6 @@ class Downloader(IO):
 		"""すべて（情報を記したCSVファイル・画像ファイル群・縮小画像ファイル群）をダウンロードする。"""
 
 		self.download_csv()
-		(lambda x: x)(self) # NOP
+
+		a_reader = Reader(self._table)
+		a_reader.perform()

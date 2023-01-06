@@ -27,11 +27,7 @@ class Reader(IO):
 			url_string = self.attributes().csv_url()
 			csv_file = os.path.join(self.attributes().base_directory(), url_string.split('/')[-1])
 
-			with open(csv_file, 'r', encoding='utf-8') as a_file:
-				for a_line in a_file:
-					a_list = a_line.split(',')
-
-					self.table().add(Tuple(self.attributes(), a_list))
+			self.table().add(Tuple(self.attributes(), self.read_csv(csv_file)))
 
 		except FileNotFoundError:
 			traceback.print_exc()

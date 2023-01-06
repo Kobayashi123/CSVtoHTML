@@ -25,9 +25,11 @@ class IO:
 	def read_csv(self, filename):
 		"""指定されたファイルをCSVとして読み込み、行リストを応答する。"""
 
-		(lambda x: x)(filename) # NOP
+		with open(filename, 'r', encoding='utf-8') as a_file:
+				for a_line in a_file:
+					a_list = a_line.split(',')
 
-		return (lambda x: x)(self) # answer something
+					return a_list
 
 	@classmethod
 	def html_canonical_string(cls, a_string):
