@@ -84,6 +84,11 @@ class Attributes:
 
 		return self._names
 
+	def names(self, a_list):
+		"""名前群を設定する"""
+
+		self._names = a_list
+
 class AttributesForPrimeMinisters(Attributes):
 	"""属性リスト：総理大臣の情報テーブルを入出力する際の属性情報を記憶。"""
 

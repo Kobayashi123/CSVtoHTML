@@ -22,7 +22,6 @@ class Downloader(IO):
 		"""ダウンローダのコンストラクタ。"""
 
 		super().__init__(input_table)
-		(lambda x: x)(input_table) # NOP
 
 	def download_csv(self):
 		"""情報を記したCSVファイルをダウンロードする。"""
@@ -37,13 +36,27 @@ class Downloader(IO):
 	def download_images(self, image_filenames):
 		"""画像ファイル群または縮小画像ファイル群をダウンロードする。"""
 
-		(lambda x: x)(self) # NOP
-		(lambda x: x)(image_filenames) # NOP
+		url_string = os.path.join(self.attributes().base_url(), image_filenames)
+		a_directory = os.path.join(self.attributes().base_directory(), url_string.split('/')[-2])
+		a_file = os.path.join(a_directory, url_string.split('/')[-1])
+
+		if not os.path.exists(a_directory):
+			os.makedirs(a_directory)
+
+		try:
+			urllib.request.urlretrieve(url_string, a_file)
+		except HTTPError:
+			traceback.print_exc()
 
 	def perform(self):
 		"""すべて（情報を記したCSVファイル・画像ファイル群・縮小画像ファイル群）をダウンロードする。"""
 
 		self.download_csv()
 
-		a_reader = Reader(self._table)
-		a_reader.perform()
+		Reader(self._table).perform()
+
+		image_key = self.attributes().keys().index('image')
+		thumbnail_key = self.attributes().keys().index('thumbnail')
+		for a_tuple in self.tuples():
+			self.download_images(a_tuple.values()[image_key])
+			self.download_images(a_tuple.values()[thumbnail_key])

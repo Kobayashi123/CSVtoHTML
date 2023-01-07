@@ -29,6 +29,9 @@ class Reader(IO):
 
 			a_list = self.read_csv(csv_file)
 
+			a_line = a_list.pop(0)
+			self.attributes().names(a_line.split(','))
+
 			for a_line in a_list:
 				a_string_list = a_line.split(',')
 				self.table().add(Tuple(self.attributes(), a_string_list))
