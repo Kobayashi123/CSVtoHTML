@@ -84,6 +84,11 @@ class Attributes:
 
 		return self._names
 
+	def names(self, a_list):
+		"""名前群を設定する"""
+
+		self._names = a_list
+
 class AttributesForPrimeMinisters(Attributes):
 	"""属性リスト：総理大臣の情報テーブルを入出力する際の属性情報を記憶。"""
 
@@ -121,8 +126,8 @@ class AttributesForPrimeMinisters(Attributes):
 	def csv_url(cls):
 		"""CSVファイルをURLで応答する。"""
 
-		# return cls.base_url() + 'PrimeMinisters.csv'
-		return cls.base_url() + 'PrimeMinisters2.csv'
+		return cls.base_url() + 'PrimeMinisters.csv'
+		# return cls.base_url() + 'PrimeMinisters2.csv'
 
 	@classmethod
 	def title_string(cls):
@@ -167,8 +172,8 @@ class AttributesForTokugawaShogunate(Attributes):
 	def csv_url(cls):
 		"""CSVファイルをURLで応答する。"""
 
-		# return cls.base_url() + 'TokugawaShogunate.csv'
-		return cls.base_url() + 'TokugawaShogunate2.csv'
+		return cls.base_url() + 'TokugawaShogunate.csv'
+		# return cls.base_url() + 'TokugawaShogunate2.csv'
 
 	@classmethod
 	def title_string(cls):
