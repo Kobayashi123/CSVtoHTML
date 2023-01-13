@@ -142,9 +142,11 @@ public class Translator extends Object {
 			aList.add(aTuple.values().get(6));
 			aList.add(aTuple.values().get(7));
 			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfThumbnail()));
-
 			this.outputTable.add(new Tuple(this.outputTable.attributes(), aList));
+			System.out.println("*********");
+			System.out.println(this.outputTable);
 		}
+		
 		return;
 	}
 }
