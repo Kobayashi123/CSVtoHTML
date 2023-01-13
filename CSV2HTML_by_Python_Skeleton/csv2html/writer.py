@@ -81,13 +81,13 @@ class Writer(IO):
 				color = True
 
 			for a_string in a_tuple.values():
-				thumbnail_string = ""
 				if("thumbnail" in a_string):
-					thumbnail_string = f"""
+					a_string= f"""
 						<img class=\"borderless\" src=\" {a_string} \" width=\"25\" height=\"32\" alt=\" {a_string[a_string.find('/')+1:]} \"
      					"""
+
 				body += a_stereotyped_phrase
-				body += thumbnail_string
+				body += a_string
 				body += """
 					</td>
 					"""
