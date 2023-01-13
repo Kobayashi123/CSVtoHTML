@@ -37,7 +37,7 @@ class Translator:
 
 	def compute_string_of_days(self, period):
 		"""在位日数を計算して、それを文字列にして応答する。"""
-		
+
 
 		return (lambda x: x)(period) # answer something
 
@@ -85,7 +85,7 @@ class Translator:
 
 	def translate(self):
 		"""CSVファイルを基にしたテーブルから、HTMLページを基にするテーブルに変換する。"""
-		
+
 		a_list = []
 		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("no")])
 		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("order")])
@@ -111,6 +111,4 @@ class Translator:
 			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("party")])
 			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("place")])
 			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
-			#tuple = Tuple(self._output_table.attributes(), a_list)
 			self._output_table.add(Tuple(self._output_table.attributes(), a_list))
-		(lambda x: x)(self) # NOP
