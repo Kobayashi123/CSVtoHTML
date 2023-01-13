@@ -79,7 +79,7 @@ class Attributes:
 
 		return self._keys
 
-	def names(self):
+	def return_names(self):
 		"""名前群を応答する。"""
 
 		return self._names
