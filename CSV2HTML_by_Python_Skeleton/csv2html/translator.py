@@ -6,7 +6,7 @@ __author__ = 'AOKI Atsushi'
 __version__ = '1.0.7'
 __date__ = '2021/01/10 (Created: 2016/01/01)'
 
-# import datetime
+import datetime
 # import locale
 import os
 import os.path
@@ -38,8 +38,14 @@ class Translator:
 	def compute_string_of_days(self, period):
 		"""在位日数を計算して、それを文字列にして応答する。"""
 
+		start, end = period.split('〜')
+		start = datetime.datetime.strptime(start, '%Y年%m月%d日')
+		if end == '':
+			end = datetime.datetime.now()
+		else:
+			end = datetime.datetime.strptime(end, '%Y年%m月%d日')
 
-		return (lambda x: x)(period) # answer something
+		return f'{(end - start + datetime.timedelta(days=1)).days:,}'
 
 	def compute_string_of_image(self, a_tuple):
 		"""サムネイル画像から画像へ飛ぶためのHTML文字列を作成して、それを応答する。"""
