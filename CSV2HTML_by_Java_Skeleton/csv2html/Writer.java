@@ -81,7 +81,6 @@ public class Writer extends IO {
 			aWriter.write("	</tbody>\n");
 			aWriter.write("</table>\n");
 
-			aWriter.write("</body>\n");
 		} catch (IOException anException) {
 			anException.printStackTrace();
 		}
@@ -94,8 +93,8 @@ public class Writer extends IO {
 	 * @param aWriter ライタ
 	 */
 	public void writeAttributesOn(BufferedWriter aWriter) {
-		String aTab = "							";
-		String aStereotypedPhrase = "<td class=\"center-pink\"><strong>";
+		String aTab = "						";
+		String aStereotypedPhrase = "	<td class=\"center-pink\"><strong>";
 		try {
 			aWriter.write(aTab + "<tr>");
 			aWriter.newLine();
@@ -121,20 +120,21 @@ public class Writer extends IO {
 	 */
 	public void writeTuplesOn(BufferedWriter aWriter) {
 
-		String aTab = "					";
+		String aTab = "						";
 		String aStereotypedPhrase;
 
 		try {
-			aWriter.write(aTab + "<tr>");
-			aWriter.newLine();
 
 			boolean color = true;
 			for (Tuple aTuple : this.table().tuples()) {
+				aWriter.write(aTab + "<tr>");
+				aWriter.newLine();
+
 				if (color) {
-					aStereotypedPhrase = "<td class=\"center-blue\">";
+					aStereotypedPhrase = "	<td class=\"center-blue\">";
 					color = false;
 				} else {
-					aStereotypedPhrase = "<td class=\"center-yellow\">";
+					aStereotypedPhrase = "	<td class=\"center-yellow\">";
 					color = true;
 				}
 

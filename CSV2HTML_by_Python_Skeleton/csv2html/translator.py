@@ -37,7 +37,7 @@ class Translator:
 
 	def compute_string_of_days(self, period):
 		"""在位日数を計算して、それを文字列にして応答する。"""
-		
+
 
 		return (lambda x: x)(period) # answer something
 
