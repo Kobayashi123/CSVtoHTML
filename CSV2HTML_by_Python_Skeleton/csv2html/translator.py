@@ -91,30 +91,58 @@ class Translator:
 
 	def translate(self):
 		"""CSVファイルを基にしたテーブルから、HTMLページを基にするテーブルに変換する。"""
-
-		a_list = []
-		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("no")])
-		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("order")])
-		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("name")])
-		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("kana")])
-		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("period")])
-		a_list.append("在位日数")
-		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("school")])
-		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("party")])
-		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("place")])
-		a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("image")])
-		self._output_table.attributes().names(a_list)
-
-		for aTuple in self._input_table.tuples():
+				
+		if self._input_table.attributes().caption_string() == '総理大臣':
 			a_list = []
-			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("no")])
-			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("order")])
-			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("name")])
-			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("kana")])
-			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("period")])
-			a_list.append(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")]))
-			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("school")])
-			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("party")])
-			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("place")])
-			a_list.append(aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
-			self._output_table.add(Tuple(self._output_table.attributes(), a_list))
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("no")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("order")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("name")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("kana")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("period")])
+			a_list.append("在位日数")
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("school")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("party")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("place")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("image")])
+			self._output_table.attributes().names(a_list)
+
+			for aTuple in self._input_table.tuples():
+				a_list = []
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("no")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("order")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("name")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("kana")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("period")])
+				a_list.append(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")]))
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("school")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("party")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("place")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
+				self._output_table.add(Tuple(self._output_table.attributes(), a_list))
+		else:
+			a_list = []
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("no")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("name")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("kana")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("period")])
+			a_list.append("在位日数")
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("family")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("rank")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("image")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("former")])
+			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("cemetery")])
+			self._output_table.attributes().names(a_list)
+
+			for aTuple in self._input_table.tuples():
+				a_list = []
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("no")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("name")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("kana")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("period")])
+				a_list.append(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")]))
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("family")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("rank")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("former")])
+				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("cemetery")])
+				self._output_table.add(Tuple(self._output_table.attributes(), a_list))
