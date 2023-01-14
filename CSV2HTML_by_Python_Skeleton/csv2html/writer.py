@@ -71,9 +71,6 @@ class Writer(IO):
 
 			body += "								<tr>\n"
 			for a_string in a_tuple.values():
-				if("thumbnail" in a_string):
-					a_string= f"<img class=\"borderless\" src=\"{a_string}\" width=\"25\" height=\"32\" alt=\"{a_string[a_string.find('/')+1:]}\">"
-
 				body += a_stereotyped_phrase
 				body += a_string
 				body += "</td>\n"
