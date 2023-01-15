@@ -62,7 +62,7 @@ class Writer(IO):
 		# タプル群を書き出す
 		color = True
 		for a_tuple in self.table().tuples():
-			if(color):
+			if color:
 				a_stereotyped_phrase = "									<td class=\"center-blue\">"
 				color = False
 			else:
