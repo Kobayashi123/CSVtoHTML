@@ -101,7 +101,7 @@ class Writer(IO):
 	def write_header(self, file):
 		"""ヘッダを書き出す。"""
 
-		doctype = textwrap.dedent(f"""\
+		doctype = textwrap.dedent("""\
 			<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			<html lang="ja">
 				<head>
