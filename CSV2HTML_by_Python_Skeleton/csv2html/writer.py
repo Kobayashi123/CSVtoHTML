@@ -22,7 +22,7 @@ class Writer(IO):
 		"""ライタのコンストラクタ。HTMLページを基にするテーブルを受け取る。"""
 
 		super().__init__(output_table)
-		(lambda x: x)(output_table) # NOP
+		#(lambda x: x)(output_table) # NOP
 
 	def perform(self):
 		"""HTMLページを基にするテーブルから、インデックスファイル(index_html)に書き出す。"""
@@ -62,7 +62,7 @@ class Writer(IO):
 		# タプル群を書き出す
 		color = True
 		for a_tuple in self.table().tuples():
-			if(color):
+			if color:
 				a_stereotyped_phrase = "									<td class=\"center-blue\">"
 				color = False
 			else:
@@ -101,7 +101,7 @@ class Writer(IO):
 	def write_header(self, file):
 		"""ヘッダを書き出す。"""
 
-		doctype = textwrap.dedent(f"""\
+		doctype = textwrap.dedent("""\
 			<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 			<html lang="ja">
 				<head>
