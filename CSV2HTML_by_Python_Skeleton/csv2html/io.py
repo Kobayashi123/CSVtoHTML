@@ -27,9 +27,9 @@ class IO:
 
 		a_list = []
 		with open(filename, 'r', encoding='utf-8', newline='') as a_file:
-			csv_reader = csv.reader(a_file, delimiter=' ', quotechar='|')
+			csv_reader = csv.reader(a_file, delimiter=',', quotechar='"')
 			for a_line in csv_reader:
-				a_list.append(''.join(a_line))
+				a_list.append(a_line)
 		return a_list
 
 	@classmethod
@@ -48,10 +48,10 @@ class IO:
 			'\f' : '',
 		}
 
-		(lambda x: x)(a_string) # NOP
-		(lambda x: x)(table) # NOP
+		for a_key in table:
+			a_string = a_string.replace(a_key, table[a_key])
 
-		return (lambda x: x)(cls) # answer something
+		return a_string
 
 	def table(self):
 		"""テーブルを応答する。"""

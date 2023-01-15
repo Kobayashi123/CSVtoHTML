@@ -6,7 +6,7 @@ __author__ = 'AOKI Atsushi'
 __version__ = '1.0.7'
 __date__ = '2021/01/10 (Created: 2016/01/01)'
 
-# import datetime
+import datetime
 # import locale
 import os
 import os.path
@@ -16,7 +16,7 @@ import subprocess
 # from PIL import Image
 
 from csv2html.downloader import Downloader
-#from csv2html.io import IO
+from csv2html.io import IO
 from csv2html.table import Table
 from csv2html.tuple import Tuple
 from csv2html.writer import Writer
@@ -38,13 +38,23 @@ class Translator:
 	def compute_string_of_days(self, period):
 		"""在位日数を計算して、それを文字列にして応答する。"""
 
-
-		return (lambda x: x)(period) # answer something
+		start, end = period.split('〜')
+		start = datetime.datetime.strptime(start, '%Y年%m月%d日')
+		if end == '':
+			end = datetime.datetime.now()
+			return f'{(end - start).days:,}'
+		else:
+			end = datetime.datetime.strptime(end, '%Y年%m月%d日')
+			return f'{(end - start + datetime.timedelta(days=1)).days:,}'
 
 	def compute_string_of_image(self, a_tuple):
 		"""サムネイル画像から画像へ飛ぶためのHTML文字列を作成して、それを応答する。"""
 
-		return (lambda x: x)(a_tuple) # answer something
+		image_name = a_tuple[1][a_tuple[1].find("/")+1:]
+		a_string = ''
+		a_string += f'<a name=\"{a_tuple[0]}\" href=\"{a_tuple[1]}\"><img class=\"borderless\" src=\"{a_tuple[2]}\" width=\"25\" height=\"32\" alt=\"{image_name}\"></a>'
+
+		return a_string
 
 	def execute(self):
 		"""CSVファイルをHTMLページへと変換する。"""
@@ -85,7 +95,7 @@ class Translator:
 
 	def translate(self):
 		"""CSVファイルを基にしたテーブルから、HTMLページを基にするテーブルに変換する。"""
-				
+
 		if self._input_table.attributes().caption_string() == '総理大臣':
 			a_list = []
 			a_list.append(self._input_table.attributes().return_names()[self._input_table.attributes().keys().index("no")])
@@ -102,16 +112,17 @@ class Translator:
 
 			for aTuple in self._input_table.tuples():
 				a_list = []
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("no")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("order")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("name")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("kana")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("period")])
-				a_list.append(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")]))
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("school")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("party")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("place")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("no")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("order")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("name")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("kana")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("period")]))
+				a_list.append(IO.html_canonical_string(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")])))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("school")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("party")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("place")]))
+				a_tuple = (aTuple.values()[self._input_table.attributes().keys().index("no")], aTuple.values()[self._input_table.attributes().keys().index("image")], aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
+				a_list.append(self.compute_string_of_image(a_tuple))
 				self._output_table.add(Tuple(self._output_table.attributes(), a_list))
 		else:
 			a_list = []
@@ -130,13 +141,14 @@ class Translator:
 			for aTuple in self._input_table.tuples():
 				a_list = []
 				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("no")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("name")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("kana")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("period")])
-				a_list.append(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")]))
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("family")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("rank")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("former")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("cemetery")])
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("name")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("kana")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("period")]))
+				a_list.append(IO.html_canonical_string(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")])))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("family")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("rank")]))
+				a_tuple = (aTuple.values()[self._input_table.attributes().keys().index("no")], aTuple.values()[self._input_table.attributes().keys().index("image")], aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
+				a_list.append(self.compute_string_of_image(a_tuple))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("former")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("cemetery")]))
 				self._output_table.add(Tuple(self._output_table.attributes(), a_list))

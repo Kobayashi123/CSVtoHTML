@@ -30,11 +30,10 @@ class Reader(IO):
 			a_list = self.read_csv(csv_file)
 
 			a_line = a_list.pop(0)
-			self.attributes().names(a_line.split(','))
+			self.attributes().names(a_line)
 
-			for a_line in a_list:
-				a_string_list = a_line.split(',')
-				self.table().add(Tuple(self.attributes(), a_string_list))
+			for a_string in a_list:
+				self.table().add(Tuple(self.attributes(), a_string))
 
 		except FileNotFoundError:
 			traceback.print_exc()
