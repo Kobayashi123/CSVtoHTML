@@ -16,7 +16,7 @@ import subprocess
 # from PIL import Image
 
 from csv2html.downloader import Downloader
-#from csv2html.io import IO
+from csv2html.io import IO
 from csv2html.table import Table
 from csv2html.tuple import Tuple
 from csv2html.writer import Writer
@@ -113,15 +113,15 @@ class Translator:
 
 			for aTuple in self._input_table.tuples():
 				a_list = []
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("no")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("order")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("name")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("kana")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("period")])
-				a_list.append(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")]))
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("school")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("party")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("place")])
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("no")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("order")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("name")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("kana")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("period")]))
+				a_list.append(IO.html_canonical_string(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")])))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("school")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("party")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("place")]))
 				a_tuple = (aTuple.values()[self._input_table.attributes().keys().index("no")], aTuple.values()[self._input_table.attributes().keys().index("image")], aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
 				a_list.append(self.compute_string_of_image(a_tuple))
 				self._output_table.add(Tuple(self._output_table.attributes(), a_list))
@@ -142,14 +142,14 @@ class Translator:
 			for aTuple in self._input_table.tuples():
 				a_list = []
 				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("no")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("name")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("kana")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("period")])
-				a_list.append(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")]))
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("family")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("rank")])
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("name")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("kana")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("period")]))
+				a_list.append(IO.html_canonical_string(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")])))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("family")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("rank")]))
 				a_tuple = (aTuple.values()[self._input_table.attributes().keys().index("no")], aTuple.values()[self._input_table.attributes().keys().index("image")], aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
 				a_list.append(self.compute_string_of_image(a_tuple))
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("former")])
-				a_list.append(aTuple.values()[self._input_table.attributes().keys().index("cemetery")])
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("former")]))
+				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("cemetery")]))
 				self._output_table.add(Tuple(self._output_table.attributes(), a_list))
