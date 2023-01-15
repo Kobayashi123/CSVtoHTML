@@ -42,18 +42,17 @@ class Translator:
 		start = datetime.datetime.strptime(start, '%Y年%m月%d日')
 		if end == '':
 			end = datetime.datetime.now()
+			return f'{(end - start).days:,}'
 		else:
 			end = datetime.datetime.strptime(end, '%Y年%m月%d日')
-
-		return f'{(end - start + datetime.timedelta(days=1)).days:,}'
+			return f'{(end - start + datetime.timedelta(days=1)).days:,}'
 
 	def compute_string_of_image(self, a_tuple):
 		"""サムネイル画像から画像へ飛ぶためのHTML文字列を作成して、それを応答する。"""
 
 		image_name = a_tuple[1][a_tuple[1].find("/")+1:]
 		a_string = ''
-		a_string += f'<a name=\"{a_tuple[0]}\" href=\"{a_tuple[1]}\">'
-		a_string += f'<img class=\"borderless\" src=\"{a_tuple[2]}\" width=\"25\" height=\"32\" alt=\"{image_name}\">'
+		a_string += f'<a name=\"{a_tuple[0]}\" href=\"{a_tuple[1]}\"><img class=\"borderless\" src=\"{a_tuple[2]}\" width=\"25\" height=\"32\" alt=\"{image_name}\"></a>'
 
 		return a_string
 
