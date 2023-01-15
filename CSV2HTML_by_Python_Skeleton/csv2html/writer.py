@@ -22,7 +22,7 @@ class Writer(IO):
 		"""ライタのコンストラクタ。HTMLページを基にするテーブルを受け取る。"""
 
 		super().__init__(output_table)
-		(lambda x: x)(output_table) # NOP
+		#(lambda x: x)(output_table) # NOP
 
 	def perform(self):
 		"""HTMLページを基にするテーブルから、インデックスファイル(index_html)に書き出す。"""
