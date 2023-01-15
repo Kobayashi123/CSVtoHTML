@@ -27,9 +27,9 @@ class IO:
 
 		a_list = []
 		with open(filename, 'r', encoding='utf-8', newline='') as a_file:
-			csv_reader = csv.reader(a_file, delimiter=' ', quotechar='|')
+			csv_reader = csv.reader(a_file, delimiter=',', quotechar='"')
 			for a_line in csv_reader:
-				a_list.append(''.join(a_line))
+				a_list.append(a_line)
 		return a_list
 
 	@classmethod
