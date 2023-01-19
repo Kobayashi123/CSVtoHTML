@@ -43,16 +43,18 @@ class Translator:
 		if end == '':
 			end = datetime.datetime.now()
 			return f'{(end - start).days:,}'
-		else:
-			end = datetime.datetime.strptime(end, '%Y年%m月%d日')
-			return f'{(end - start + datetime.timedelta(days=1)).days:,}'
+
+		end = datetime.datetime.strptime(end, '%Y年%m月%d日')
+
+		return f'{(end - start + datetime.timedelta(days=1)).days:,}'
 
 	def compute_string_of_image(self, a_tuple):
 		"""サムネイル画像から画像へ飛ぶためのHTML文字列を作成して、それを応答する。"""
 
 		image_name = a_tuple[1][a_tuple[1].find("/")+1:]
 		a_string = ''
-		a_string += f'<a name=\"{a_tuple[0]}\" href=\"{a_tuple[1]}\"><img class=\"borderless\" src=\"{a_tuple[2]}\" width=\"25\" height=\"32\" alt=\"{image_name}\"></a>'
+		a_string += f'<a name=\"{a_tuple[0]}\" href=\"{a_tuple[1]}\">\
+					<img class=\"borderless\" src=\"{a_tuple[2]}\" width=\"25\" height=\"32\" alt=\"{image_name}\"></a>'
 
 		return a_string
 
@@ -121,7 +123,9 @@ class Translator:
 				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("school")]))
 				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("party")]))
 				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("place")]))
-				a_tuple = (aTuple.values()[self._input_table.attributes().keys().index("no")], aTuple.values()[self._input_table.attributes().keys().index("image")], aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
+				a_tuple = (aTuple.values()[self._input_table.attributes().keys().index("no")],
+						aTuple.values()[self._input_table.attributes().keys().index("image")],
+						aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
 				a_list.append(self.compute_string_of_image(a_tuple))
 				self._output_table.add(Tuple(self._output_table.attributes(), a_list))
 		else:
@@ -147,7 +151,9 @@ class Translator:
 				a_list.append(IO.html_canonical_string(self.compute_string_of_days(aTuple.values()[self._output_table.attributes().keys().index("period")])))
 				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("family")]))
 				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("rank")]))
-				a_tuple = (aTuple.values()[self._input_table.attributes().keys().index("no")], aTuple.values()[self._input_table.attributes().keys().index("image")], aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
+				a_tuple = (aTuple.values()[self._input_table.attributes().keys().index("no")],
+					aTuple.values()[self._input_table.attributes().keys().index("image")],
+					aTuple.values()[self._input_table.attributes().keys().index("thumbnail")])
 				a_list.append(self.compute_string_of_image(a_tuple))
 				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("former")]))
 				a_list.append(IO.html_canonical_string(aTuple.values()[self._input_table.attributes().keys().index("cemetery")]))

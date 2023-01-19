@@ -451,7 +451,9 @@ disable=raw-checker-failed,
         use-symbolic-message-instead,
         invalid-name,
         deprecated-module,
-        unnecessary-direct-lambda-call
+        unnecessary-direct-lambda-call,
+        useless-option-value
+        
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
