@@ -1,5 +1,6 @@
 package csv2html;
 
+import java.util.Arrays;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -8,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * トランスレータ：CSVファイルをHTMLページへと変換するプログラム。
@@ -53,8 +58,29 @@ public class Translator extends Object {
 	 * @return 在位日数の文字列
 	 */
 	public String computeNumberOfDays(String periodString) {
-		String temp = "1000(temp)";
-		return temp;
+		Integer datecal;
+		List<String> startEnd = new ArrayList<>();
+		String[] spritDate = periodString.split("〜");
+		for (String temp : spritDate) {
+			startEnd.add(temp);
+		}
+		if(startEnd.size() == 1){
+			Date date = new Date();
+			String nowDate = new SimpleDateFormat("yyyy年MM月dd日 hh:mm:ss").format(date);
+			startEnd.add(nowDate);
+		}
+		SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy年MM月dd日");
+		try{
+			Date date1 = sdFormat.parse(startEnd.get(0));
+			Date date2 = sdFormat.parse(startEnd.get(1));
+			datecal = Integer.valueOf(String.valueOf(TimeUnit.DAYS.convert(date2.getTime() - date1.getTime(), TimeUnit.MILLISECONDS)));
+			return String.format("%,d", datecal + 1);
+		}
+		catch (ParseException anException){
+			anException.printStackTrace();
+		}
+
+		return null;
 	}
 
 	/**
@@ -66,7 +92,11 @@ public class Translator extends Object {
 	 * @return サムネイル画像から画像へ飛ぶためのHTML文字列
 	 */
 	public String computeStringOfImage(String aString, Tuple aTuple, int no) {
-		return null;
+		String anotherString = "<a name=\"%d\" href=\"%s\" >".formatted(no, aString);
+		anotherString = anotherString.concat("<img class=\"borderless\" src=\" %s \" width=\"25\" height=\"32\" alt=\" %s \">"
+						.formatted(aTuple.values().get(this.inputTable.attributes().indexOfThumbnail()), aString.substring(aString.lastIndexOf("/") + 1)));
+
+		return anotherString;
 	}
 
 	/**
@@ -141,10 +171,10 @@ public class Translator extends Object {
 			aList.add(aTuple.values().get(5));
 			aList.add(aTuple.values().get(6));
 			aList.add(aTuple.values().get(7));
-			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfThumbnail()));
+			aList.add(this.computeStringOfImage(aTuple.values().get(this.inputTable.attributes().indexOfImage()),
+					aTuple, Integer.valueOf(aTuple.values().get(this.inputTable.attributes().indexOfNo()))));
 			this.outputTable.add(new Tuple(this.outputTable.attributes(), aList));
 		}
-		
 		return;
 	}
 }
