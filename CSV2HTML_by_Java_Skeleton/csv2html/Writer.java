@@ -139,10 +139,6 @@ public class Writer extends IO {
 				}
 
 				for (String aString : aTuple.values()) {
-					if (aString.contains("thumbnail")) {
-						aString = "<img class=\"borderless\" src=\" %s \" width=\"25\" height=\"32\" alt=\" %s \">"
-								.formatted(aString, aString.substring(aString.lastIndexOf("/") + 1));
-					}
 					aWriter.write(aTab + aStereotypedPhrase + aString);
 					aWriter.write("</td>");
 					aWriter.newLine();

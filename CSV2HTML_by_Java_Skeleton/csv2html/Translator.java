@@ -92,7 +92,11 @@ public class Translator extends Object {
 	 * @return サムネイル画像から画像へ飛ぶためのHTML文字列
 	 */
 	public String computeStringOfImage(String aString, Tuple aTuple, int no) {
-		return null;
+		String anotherString = "<a name=\"%d\" href=\"%s\" >".formatted(no, aString);
+		anotherString = anotherString.concat("<img class=\"borderless\" src=\" %s \" width=\"25\" height=\"32\" alt=\" %s \">"
+						.formatted(aTuple.values().get(this.inputTable.attributes().indexOfThumbnail()), aString.substring(aString.lastIndexOf("/") + 1)));
+
+		return anotherString;
 	}
 
 	/**
@@ -167,7 +171,8 @@ public class Translator extends Object {
 			aList.add(aTuple.values().get(5));
 			aList.add(aTuple.values().get(6));
 			aList.add(aTuple.values().get(7));
-			aList.add(aTuple.values().get(this.inputTable.attributes().indexOfThumbnail()));
+			aList.add(this.computeStringOfImage(aTuple.values().get(this.inputTable.attributes().indexOfImage()),
+					aTuple, Integer.valueOf(aTuple.values().get(this.inputTable.attributes().indexOfNo()))));
 			this.outputTable.add(new Tuple(this.outputTable.attributes(), aList));
 		}
 		return;
