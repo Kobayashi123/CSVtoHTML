@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.io.IOException;
 import java.util.List;
+
 import utility.StringUtility;
 
 /**
@@ -45,7 +46,9 @@ public class Reader extends IO {
 
 			while ((aString = bufferedReader.readLine()) != null) {
 				aList = splitString(aString, ",");
-
+				if (aList.size() != this.attributes().size()) {
+					aList.add(this.attributes().indexOf("former"), "");
+				}
 				this.table().add(new Tuple(this.attributes(), aList));
 			}
 
