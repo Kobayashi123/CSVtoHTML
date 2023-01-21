@@ -13,7 +13,6 @@ The number of days of incarceration is obtained from the period of incarceration
 By implementing these processes in Java and Python, the objective is to learn the programming paradigm of object-oriented programming.
 
 ## Requirement
-MacBook Air (Retina, 13-inch, 2020)
 
 macOS 12.6.2
 
