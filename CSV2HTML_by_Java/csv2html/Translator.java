@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import javax.imageio.ImageIO;
 
 /**
  * トランスレータ：CSVファイルをHTMLページへと変換するプログラム。
@@ -92,10 +93,20 @@ public class Translator extends Object {
 	 * @return サムネイル画像から画像へ飛ぶためのHTML文字列
 	 */
 	public String computeStringOfImage(String aString, Tuple aTuple, int no) {
+		String anImageString = this.inputTable.attributes().baseDirectory().concat(aString);
+		BufferedImage anImage = null;
+		try {
+			anImage = ImageIO.read(new File(anImageString));
+		} catch (Exception anException) {
+			anException.printStackTrace();
+		}
+		System.out.println(anImage.getWidth());
+		System.out.println(anImage.getHeight());
 		String anotherString = "<a name=\"%d\" href=\"%s\" >".formatted(no, aString);
 		anotherString = anotherString
-				.concat("<img class=\"borderless\" src=\" %s \" width=\"25\" height=\"32\" alt=\" %s \">"
+				.concat("<img class=\"borderless\" src=\" %s \" width=\"%d\" height=\"%d\" alt=\" %s \">"
 						.formatted(aTuple.values().get(this.inputTable.attributes().indexOfThumbnail()),
+								anImage.getWidth(), anImage.getHeight(),
 								aString.substring(aString.lastIndexOf("/") + 1)));
 
 		return anotherString;
@@ -175,7 +186,8 @@ public class Translator extends Object {
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("school")));
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("party")));
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("place")));
-				aList.add(this.computeStringOfImage(aTuple.values().get(this.inputTable.attributes().indexOfImage()),
+				aList.add(this.computeStringOfImage(
+						aTuple.values().get(this.inputTable.attributes().indexOfThumbnail()),
 						aTuple, Integer.valueOf(aTuple.values().get(this.inputTable.attributes().indexOfNo()))));
 				this.outputTable.add(new Tuple(this.outputTable.attributes(), aList));
 			}
@@ -202,7 +214,8 @@ public class Translator extends Object {
 				aList.add(this.computeNumberOfDays(aTuple.values().get(this.outputTable.attributes().indexOfPeriod())));
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("family")));
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("rank")));
-				aList.add(this.computeStringOfImage(aTuple.values().get(this.inputTable.attributes().indexOfImage()),
+				aList.add(this.computeStringOfImage(
+						aTuple.values().get(this.inputTable.attributes().indexOfThumbnail()),
 						aTuple, Integer.valueOf(aTuple.values().get(this.inputTable.attributes().indexOfNo()))));
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("former")));
 				aList.add(aTuple.values().get((this.inputTable.attributes().indexOf("cemetery"))));
