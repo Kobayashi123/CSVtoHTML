@@ -153,28 +153,28 @@ public class Translator extends Object {
 		if (this.inputTable.attributes().captionString().equals("総理大臣")) {
 			aList = new ArrayList<String>();
 			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfNo()));
-			aList.add(this.inputTable.attributes().nameAt(1));
+			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOf("order")));
 			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfName()));
 			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfKana()));
 			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfPeriod()));
 			aList.add("在位日数");
-			aList.add(this.inputTable.attributes().nameAt(5));
-			aList.add(this.inputTable.attributes().nameAt(6));
-			aList.add(this.inputTable.attributes().nameAt(7));
+			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOf("school")));
+			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOf("party")));
+			aList.add(this.inputTable.attributes().nameAt((this.inputTable.attributes().indexOf("place"))));
 			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfImage()));
 			this.outputTable.attributes().names(aList);
 
 			for (Tuple aTuple : this.inputTable.tuples()) {
 				aList = new ArrayList<String>();
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOfNo()));
-				aList.add(aTuple.values().get(1));
+				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("order")));
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOfName()));
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOfKana()));
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOfPeriod()));
 				aList.add(this.computeNumberOfDays(aTuple.values().get(this.outputTable.attributes().indexOfPeriod())));
-				aList.add(aTuple.values().get(5));
-				aList.add(aTuple.values().get(6));
-				aList.add(aTuple.values().get(7));
+				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("school")));
+				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("party")));
+				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("place")));
 				aList.add(this.computeStringOfImage(aTuple.values().get(this.inputTable.attributes().indexOfImage()),
 						aTuple, Integer.valueOf(aTuple.values().get(this.inputTable.attributes().indexOfNo()))));
 				this.outputTable.add(new Tuple(this.outputTable.attributes(), aList));
@@ -186,11 +186,11 @@ public class Translator extends Object {
 			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfKana()));
 			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfPeriod()));
 			aList.add("在位日数");
-			aList.add(this.inputTable.attributes().nameAt(4));
-			aList.add(this.inputTable.attributes().nameAt(5));
+			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOf("family")));
+			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOf("rank")));
 			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOfImage()));
-			aList.add(this.inputTable.attributes().nameAt(8));
-			aList.add(this.inputTable.attributes().nameAt(9));
+			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOf("former")));
+			aList.add(this.inputTable.attributes().nameAt(this.inputTable.attributes().indexOf("cemetery")));
 			this.outputTable.attributes().names(aList);
 
 			for (Tuple aTuple : this.inputTable.tuples()) {
@@ -200,12 +200,12 @@ public class Translator extends Object {
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOfKana()));
 				aList.add(aTuple.values().get(this.inputTable.attributes().indexOfPeriod()));
 				aList.add(this.computeNumberOfDays(aTuple.values().get(this.outputTable.attributes().indexOfPeriod())));
-				aList.add(aTuple.values().get(4));
-				aList.add(aTuple.values().get(5));
+				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("family")));
+				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("rank")));
 				aList.add(this.computeStringOfImage(aTuple.values().get(this.inputTable.attributes().indexOfImage()),
 						aTuple, Integer.valueOf(aTuple.values().get(this.inputTable.attributes().indexOfNo()))));
-				aList.add(aTuple.values().get(8));
-				aList.add(aTuple.values().get(9));
+				aList.add(aTuple.values().get(this.inputTable.attributes().indexOf("former")));
+				aList.add(aTuple.values().get((this.inputTable.attributes().indexOf("cemetery"))));
 				this.outputTable.add(new Tuple(this.outputTable.attributes(), aList));
 			}
 		}
