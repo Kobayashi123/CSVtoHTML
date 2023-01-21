@@ -47,7 +47,7 @@ $ make test
 
 ## Licence
 
-[MIT](https://github.com/Kobayashi123/CSVtoHTML.git/LICENCE)
+[MIT](https://github.com/Kobayashi123/CSVtoHTML/blob/main/LICENCE)
 
 ## Author
 
