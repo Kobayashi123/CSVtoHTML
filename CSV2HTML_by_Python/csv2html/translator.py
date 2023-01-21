@@ -13,7 +13,7 @@ import os.path
 # import re
 import subprocess
 
-# from PIL import Image
+from PIL import Image
 
 from csv2html.downloader import Downloader
 from csv2html.io import IO
@@ -52,9 +52,10 @@ class Translator:
 		"""サムネイル画像から画像へ飛ぶためのHTML文字列を作成して、それを応答する。"""
 
 		image_name = a_tuple[1][a_tuple[1].find("/")+1:]
-		a_string = ''
-		a_string += f'<a name=\"{a_tuple[0]}\" href=\"{a_tuple[1]}\">\
-					<img class=\"borderless\" src=\"{a_tuple[2]}\" width=\"25\" height=\"32\" alt=\"{image_name}\"></a>'
+		image = Image.open(self._input_table.attributes().base_directory() + os.sep + a_tuple[2])
+
+		a_string = f'<a name=\"{a_tuple[0]}\" href=\"{a_tuple[1]}\">\
+<img class=\"borderless\" src=\"{a_tuple[2]}\" width=\"{image.width}\" height=\"{image.height}\" alt=\"{image_name}\"></a>'
 
 		return a_string
 
