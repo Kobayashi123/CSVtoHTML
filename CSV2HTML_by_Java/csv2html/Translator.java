@@ -100,8 +100,6 @@ public class Translator extends Object {
 		} catch (Exception anException) {
 			anException.printStackTrace();
 		}
-		System.out.println(anImage.getWidth());
-		System.out.println(anImage.getHeight());
 		String anotherString = "<a name=\"%d\" href=\"%s\" >".formatted(no, aString);
 		anotherString = anotherString
 				.concat("<img class=\"borderless\" src=\" %s \" width=\"%d\" height=\"%d\" alt=\" %s \">"
